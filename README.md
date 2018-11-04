@@ -42,3 +42,12 @@ $ man BridgeSupport
 ```
 
 There is also a DTD file available, that should be installed as /System/Library/DTDs/BridgeSupport.dtd.
+
+## Note: macOS 10.14 Mojave
+
+When using on macOS 10.14 Mojave, system bundled ruby fails with `require 'bridgesupportparser'` and cause a crash.
+You can avoid the problem with adding following configuration in your `.bashrc` or `.zshrc`.
+
+```
+export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/lib
+```
