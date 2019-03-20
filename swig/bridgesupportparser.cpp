@@ -863,8 +863,7 @@ void BridgeSupportParser::setTargetOptions(TargetOptions &targetOpt, const std::
 
 void BridgeSupportParser::setLanguageOptions(LangOptions *opt)
 {
-    opt->ObjC1 = true;
-    opt->ObjC2 = true;
+    opt->ObjC = true;
 
     opt->LineComment = true;
     opt->Blocks = true;
