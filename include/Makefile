@@ -9,5 +9,5 @@ include:
 	mkdir -p $(INCLUDEOBJC)
 	cp /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/MacTypes.h $(BS_INCLUDE)/BSMacTypes.h
 	ed - $(BS_INCLUDE)/BSMacTypes.h < BSMacTypes.h.ed
-	cp /usr/include/objc/objc.h $(INCLUDEOBJC)
+	cp $(SDKROOT)/usr/include/objc/objc.h $(INCLUDEOBJC)
 	ed - $(INCLUDEOBJC)/objc.h < objc.h.ed

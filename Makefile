@@ -22,6 +22,8 @@ RC_ARCHS = x86_64
 ORDERED_ARCHS = $(filter %64,$(RC_ARCHS)) $(filter-out %64,$(RC_ARCHS))
 RC_CFLAGS = $(foreach arch,$(RC_ARCHS),-arch $(arch)) -pipe
 
+DEVELOPER_DIR = $(shell xcode-select -p)
+SDKROOT = $(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 RSYNC = /usr/bin/rsync -rlpt
 RUBY = ruby
 
@@ -52,9 +54,9 @@ BS_INCLUDE = $(BS_LIBS)/include
 BS_RUBY := $(BS_LIBS)/ruby-$(shell $(RUBY) -e 'puts RUBY_VERSION.sub(/^(\d+\.\d+)(\..*)?$$/, "\\1")')
 RUBYLIB = $(BS_RUBY)
 
-LIBSYSTEM_HEADERS = /usr/include/asl.h /usr/include/notify*.h /usr/include/copyfile.h /usr/include/sandbox.h /usr/include/launch.h /usr/include/CommonCrypto/*.h
-ifneq ($(realpath /usr/include/objc/NSObjCRuntime.h),"")
-	LIBSYSTEM_HEADERS += /usr/include/objc/NSObjCRuntime.h
+LIBSYSTEM_HEADERS = $(SDKROOT)/usr/include/asl.h $(SDKROOT)/usr/include/notify*.h $(SDKROOT)/usr/include/copyfile.h $(SDKROOT)/usr/include/sandbox.h $(SDKROOT)/usr/include/launch.h $(SDKROOT)/usr/include/CommonCrypto/*.h
+ifneq ($(realpath $(SDKROOT)/usr/include/objc/NSObjCRuntime.h),"")
+	LIBSYSTEM_HEADERS += $(SDKROOT)/usr/include/objc/NSObjCRuntime.h
 endif
 
 # For the Apple build system, we split into two separate projects:
@@ -198,7 +200,7 @@ $(LIBSYSTEM_BRIDGESUPPORT):
 	@/bin/echo -n '*** Started Building .bridgesupport files: ' && date
 	# TODO : generate BridgeSupport files in each system library frameworks
 	# DSTROOT='$(DSTROOT)' RUBYLIB='$(RUBYLIB)' $(RUBY) build.rb
-	RUBYLIB='$(RUBYLIB)' $(RUBY) gen_bridge_metadata.rb -c '-I/usr/include/CommonCrypto -I/usr/include/objc' -e $(LIBSYSTEM_EXCEPTION) -o $@ $(LIBSYSTEM_HEADERS)
+	RUBYLIB='$(RUBYLIB)' $(RUBY) gen_bridge_metadata.rb -c '-I$(SDKROOT)/usr/include/CommonCrypto -I$(SDKROOT)/usr/include/objc' -e $(LIBSYSTEM_EXCEPTION) -o $@ $(LIBSYSTEM_HEADERS)
 	$(INSTALL_DIRECTORY) $(SYSTEM_BRIDGESUPPORT)
 	$(LN) -fs `echo $(SYSTEM_BS) | sed 's,[^/]*,..,g'`/BridgeSupport/libSystem.bridgesupport $(SYSTEM_BRIDGESUPPORT)/System.bridgesupport
 	@/bin/echo -n '*** Finished Building .bridgesupport files: ' && date
