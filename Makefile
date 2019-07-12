@@ -200,7 +200,7 @@ $(LIBSYSTEM_BRIDGESUPPORT):
 	@/bin/echo -n '*** Started Building .bridgesupport files: ' && date
 	# TODO : generate BridgeSupport files in each system library frameworks
 	# DSTROOT='$(DSTROOT)' RUBYLIB='$(RUBYLIB)' $(RUBY) build.rb
-	RUBYLIB='$(RUBYLIB)' $(RUBY) gen_bridge_metadata.rb -c '-I$(SDKROOT)/usr/include/CommonCrypto -I$(SDKROOT)/usr/include/objc' -e $(LIBSYSTEM_EXCEPTION) -o $@ $(LIBSYSTEM_HEADERS)
+	RUBYLIB='$(RUBYLIB)' $(RUBY) gen_bridge_metadata.rb -c '-isysroot $(SDKROOT) -I$(SDKROOT)/usr/include/CommonCrypto -I$(SDKROOT)/usr/include/objc' -e $(LIBSYSTEM_EXCEPTION) -o $@ $(LIBSYSTEM_HEADERS)
 	$(INSTALL_DIRECTORY) $(SYSTEM_BRIDGESUPPORT)
 	$(LN) -fs `echo $(SYSTEM_BS) | sed 's,[^/]*,..,g'`/BridgeSupport/libSystem.bridgesupport $(SYSTEM_BRIDGESUPPORT)/System.bridgesupport
 	@/bin/echo -n '*** Finished Building .bridgesupport files: ' && date
