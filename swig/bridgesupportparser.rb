@@ -871,8 +871,8 @@ module Bridgesupportparser
     FOUNDATIONSPECIAL = {
 	# Special case: <Foundation/NSObject.h> may be split off into
 	# <objc/NSObject.h> and <objc/NSObjCRuntime.h>
-	"#{ENV['SDKROOT']}/usr/include/objc/NSObject.h" => [true, true],
-	"#{ENV['SDKROOT']}/usr/include/objc/NSObjCRuntime.h" => [true, true],
+	'/usr/include/objc/NSObject.h' => [true, true],
+	'/usr/include/objc/NSObjCRuntime.h' => [true, true],
     }
     SPECIALPATHDATA = {
 	'Foundation.framework' => FOUNDATIONSPECIAL,
