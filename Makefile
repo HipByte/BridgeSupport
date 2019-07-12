@@ -267,5 +267,7 @@ rebuild:
 	rm -rf $(DSTROOT_MADE)
 	rm -rf $(SYMROOT_MADE)
 	rm -rf $(SWIG_DIR)
+	rm -rf $(DSTROOT)
+	rm -rf $(SYMROOT)
 	make
 
