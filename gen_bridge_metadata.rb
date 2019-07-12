@@ -64,13 +64,10 @@ require 'ostruct'
 require 'shellwords'
 require 'bridgesupportparser'
 
-DEVELOPER_DIR = `xcode-select -p`.strip!
-ENV['SDKROOT'] = ENV['SDKROOT'] || "#{DEVELOPER_DIR}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
-
 class OCHeaderAnalyzer
     CPP = ['/usr/bin/cpp-4.2', '/usr/bin/cpp-4.0', '/usr/bin/cpp'].find { |x| File.exist?(x) }
     raise "Can't find cpp: have you installed Xcode and the command-line tools?" if CPP.nil?
-    CPPFLAGS = "-D__APPLE_CPP__ -D__BLOCKS__ -include #{ENV['SDKROOT']}/usr/include/AvailabilityMacros.h"
+    CPPFLAGS = "-D__APPLE_CPP__ -D__BLOCKS__ -include /usr/include/AvailabilityMacros.h"
     CPPFLAGS << " -D__GNUC__" unless /^cpp-4/.match(File.basename(CPP))
 
     def self.data(data)
